@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trellis Image Uploader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖼️ Trellis Image Uploader</h1>
+            <p>Drag and drop multiple images or click to browse</p>
+        </header>
+
+        <main>
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <div id="dropZone" class="drop-zone">
+                    <div class="drop-zone-content">
+                        <div class="upload-icon">📁</div>
+                        <p class="drop-text">Drag & drop images here</p>
+                        <p class="or-text">or</p>
+                        <button type="button" id="browseBtn" class="browse-btn">Browse Files</button>
+                        <input type="file" id="fileInput" multiple accept="image/*" hidden>
+                    </div>
+                </div>
+
+                <!-- Upload Progress -->
+                <div id="uploadProgress" class="upload-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <p id="progressText">Uploading...</p>
+                </div>
+            </div>
+
+            <!-- Preview Area -->
+            <div id="previewSection" class="preview-section" style="display: none;">
+                <h3>Selected Images</h3>
+                <div id="previewContainer" class="preview-container">
+                    <!-- Preview thumbnails will be added here -->
+                </div>
+                <div class="upload-controls">
+                    <button id="uploadBtn" class="upload-btn">Upload Images</button>
+                    <button id="clearBtn" class="clear-btn">Clear All</button>
+                </div>
+            </div>
+
+            <!-- Uploaded Images Gallery -->
+            <div class="gallery-section">
+                <h3>Uploaded Images</h3>
+                <div class="gallery-controls">
+                    <button id="refreshBtn" class="refresh-btn">🔄 Refresh</button>
+                    <span id="imageCount" class="image-count">0 images</span>
+                </div>
+                <div id="gallery" class="gallery">
+                    <!-- Uploaded images will be displayed here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal for full-size image view -->
+        <div id="imageModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img id="modalImage" src="" alt="Full size image">
+                <div class="modal-info">
+                    <p id="modalFilename"></p>
+                    <button id="deleteBtn" class="delete-btn">🗑️ Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification" class="notification" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
