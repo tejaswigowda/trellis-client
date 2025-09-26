@@ -8,8 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 7860;
 
 // Ensure uploads and thumbnails directories exist
-const uploadsDir = path.join(__dirname, 'trellis-client/uploads');
-const thumbnailsDir = path.join(__dirname, 'trellis-client/thumbnails');
+const uploadsDir = path.join(__dirname, 'uploads');
+const thumbnailsDir = path.join(__dirname, 'thumbnails');
 
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
