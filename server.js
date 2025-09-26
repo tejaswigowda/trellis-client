@@ -47,7 +47,7 @@ const upload = multer({
 });
 
 // Serve static files
-app.use(express.static('public'));
+app.use(express.static('trellis-client/public'));
 app.use('/uploads', express.static('uploads'));
 app.use('/thumbnails', express.static('thumbnails'));
 
@@ -198,7 +198,7 @@ async function processFiles(folderPath) {
 
         try {
             // Wait for git commands to complete
-            await execAsync(`python ../trellis-run.py ${folderPath}`);
+            await execAsync(`python rellis-run.py ${folderPath}`);
             console.log(`File ${destination} created.`);
         } catch (err) {
             console.error(`Error processing`, err);
