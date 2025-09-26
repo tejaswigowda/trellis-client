@@ -48,8 +48,8 @@ const upload = multer({
 
 // Serve static files
 app.use(express.static('trellis-client/public'));
-app.use('/uploads', express.static('uploads'));
-app.use('/thumbnails', express.static('thumbnails'));
+app.use('trellis-client/uploads', express.static('uploads'));
+app.use('trellis-client/thumbnails', express.static('thumbnails'));
 
 // Generate thumbnail for uploaded image
 async function generateThumbnail(imagePath, filename) {
