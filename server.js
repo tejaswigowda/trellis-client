@@ -47,9 +47,9 @@ const upload = multer({
 });
 
 // Serve static files
-app.use(express.static('trellis-client/public'));
-app.use('trellis-client/uploads', express.static('uploads'));
-app.use('trellis-client/thumbnails', express.static('thumbnails'));
+app.use(express.static('public'));
+app.use('uploads', express.static('uploads'));
+app.use('thumbnails', express.static('thumbnails'));
 
 // Generate thumbnail for uploaded image
 async function generateThumbnail(imagePath, filename) {
@@ -96,8 +96,8 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
                     originalName: file.originalname,
                     size: file.size,
                     mimeType: file.mimetype,
-                    uploadPath: `trellis-client/uploads/${hash}/${file.filename}`,
-                    thumbnailPath: `trellis-client/thumbnails/thumb_${file.filename}`
+                    uploadPath: `uploads/${hash}/${file.filename}`,
+                    thumbnailPath: `thumbnails/thumb_${file.filename}`
                 });
             } catch (thumbnailError) {
                 console.error('Error generating thumbnail for', file.filename, thumbnailError);
@@ -107,7 +107,7 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
                     originalName: file.originalname,
                     size: file.size,
                     mimeType: file.mimetype,
-                    uploadPath: `trellis-client/uploads/${file.filename}`,
+                    uploadPath: `uploads/${file.filename}`,
                     thumbnailPath: null,
                     thumbnailError: true
                 });
@@ -198,7 +198,7 @@ async function processFiles(folderPath) {
 
         try {
             // Wait for git commands to complete
-            await execAsync(`python trellis-run.py ${folderPath}`);
+            await execAsync(`python ../trellis-run.py ${folderPath}`);
             console.log(`File ${destination} created.`);
         } catch (err) {
             console.error(`Error processing`, err);
