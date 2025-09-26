@@ -198,7 +198,7 @@ async function processFiles(folderPath) {
 
         try {
             // Wait for git commands to complete
-            await execAsync(`python rellis-run.py ${folderPath}`);
+            await execAsync(`python trellis-run.py ${folderPath}`);
             console.log(`File ${destination} created.`);
         } catch (err) {
             console.error(`Error processing`, err);
