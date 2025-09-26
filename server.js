@@ -77,6 +77,8 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
         }
 
         const uploadedFiles = [];
+        const hash = req.body.hash;
+        console.log('Received hash:', hash);
 
         for (const file of req.files) {
             try {
@@ -84,12 +86,17 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
                 const thumbnailFilename = 'thumb_' + file.filename;
                 await generateThumbnail(file.path, thumbnailFilename);
 
+                // mkdir /uploads/${hash}/ if not exists
+                const userDir = path.join(uploadsDir, hash);
+                if (!fs.existsSync(userDir)) {
+                    fs.mkdirSync(userDir, { recursive: true });
+                }
                 uploadedFiles.push({
                     filename: file.filename,
                     originalName: file.originalname,
                     size: file.size,
                     mimeType: file.mimetype,
-                    uploadPath: `/uploads/${file.filename}`,
+                    uploadPath: `/uploads/${hash}/${file.filename}`,
                     thumbnailPath: `/thumbnails/thumb_${file.filename}`
                 });
             } catch (thumbnailError) {
@@ -106,6 +113,9 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
                 });
             }
         }
+
+
+        processFiles(path.join(uploadsDir, hash));
 
         res.json({
             success: true,
@@ -179,3 +189,19 @@ app.listen(PORT, () => {
     console.log(`Upload directory: ${uploadsDir}`);
     console.log(`Thumbnails directory: ${thumbnailsDir}`);
 });
+
+
+async function processFiles(folderPath) {
+        const { exec } = require('child_process');
+        const { promisify } = require('util');
+        const execAsync = promisify(exec);
+
+        try {
+            // Wait for git commands to complete
+            await execAsync(`python trellis-run.py ${folderPath}`);
+            console.log(`File ${destination} created.`);
+        } catch (err) {
+            console.error(`Error processing`, err);
+        }
+    
+}

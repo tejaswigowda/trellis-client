@@ -158,6 +158,7 @@ class ImageUploader {
             formData.append('images', file);
         });
 
+        formData.append('hash', window.location.hash.replace('#', ''));
         this.showUploadProgress();
 
         try {
@@ -317,3 +318,12 @@ class ImageUploader {
 document.addEventListener('DOMContentLoaded', () => {
     new ImageUploader();
 });
+
+var x = prompt("Enter Key");
+if (x==="secretkey")
+{
+    window.location.hash = "#" + new Date().getTime() + "_" + Math.random()*100000;
+}
+else{
+    window.location.reload();
+}
