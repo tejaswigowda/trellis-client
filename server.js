@@ -107,7 +107,7 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
                     originalName: file.originalname,
                     size: file.size,
                     mimeType: file.mimetype,
-                    uploadPath: `uploads/${file.filename}`,
+                    uploadPath: `uploads/${hash}/${file.filename}`,
                     thumbnailPath: null,
                     thumbnailError: true
                 });
