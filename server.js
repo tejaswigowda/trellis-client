@@ -8,8 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 7860;
 
 // Ensure uploads and thumbnails directories exist
-const uploadsDir = path.join(__dirname, 'uploads');
-const thumbnailsDir = path.join(__dirname, 'thumbnails');
+const uploadsDir = path.join(__dirname, 'trellis-client/uploads');
+const thumbnailsDir = path.join(__dirname, 'trellis-client/thumbnails');
 
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
@@ -96,8 +96,8 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
                     originalName: file.originalname,
                     size: file.size,
                     mimeType: file.mimetype,
-                    uploadPath: `/uploads/${hash}/${file.filename}`,
-                    thumbnailPath: `/thumbnails/thumb_${file.filename}`
+                    uploadPath: `trellis-client/uploads/${hash}/${file.filename}`,
+                    thumbnailPath: `trellis-client/thumbnails/thumb_${file.filename}`
                 });
             } catch (thumbnailError) {
                 console.error('Error generating thumbnail for', file.filename, thumbnailError);
@@ -107,7 +107,7 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
                     originalName: file.originalname,
                     size: file.size,
                     mimeType: file.mimetype,
-                    uploadPath: `/uploads/${file.filename}`,
+                    uploadPath: `trellis-client/uploads/${file.filename}`,
                     thumbnailPath: null,
                     thumbnailError: true
                 });
